@@ -31,7 +31,8 @@ onMounted(() => {
       value:[110.3467, 41.4899]
     },
   ];
-  var option = {
+  // var option = 
+  charts.setOption({
     backgroundColor: "black",
     geo: {
       map: "china",
@@ -152,10 +153,6 @@ onMounted(() => {
           zlevel: 1
       },
     ],
-  };
-
-  charts.setOption({
-
   })
 })
 
