@@ -1,11 +1,7 @@
 <template>
   <div class="box" :style="{background: `url(${bg})`}">
     <div class="box-left"></div>
-    <div class="box-center">
-      <div id="china">
-
-      </div>
-    </div>
+    <div id="china" class="box-center"></div>
     <div class="box-right"></div>
   </div>
 </template>
@@ -15,6 +11,7 @@ import bg from './image/img-bg.jpg'
 import { useStore } from './stores/counter'
 import { onMounted } from 'vue'
 import * as echarts from 'echarts'   // echart 5的用法
+import './assets/china'
 
 const store = useStore()
 store.getList()
@@ -33,14 +30,14 @@ onMounted(() => {
   ];
   // var option = 
   charts.setOption({
-    backgroundColor: "black",
+    // backgroundColor: "black",
     geo: {
       map: "china",
       aspectScale: 0.8,
       layoutCenter: ["50%", "50%"],
       layoutSize: "120%",
       itemStyle: {
-        normal: {
+        // normal: {
           areaColor: {
             type: "linear-gradient",
             x: 0,
@@ -63,11 +60,12 @@ onMounted(() => {
           shadowOffsetX: 0,
           shadowOffsetY: 15,
           opacity: 0.5,
-        },
-        emphasis: {
+        // },
+        
+      },
+      emphasis: {
           areaColor: "#0f5d9d",
         },
-      },
 
       regions: [
         {
@@ -75,12 +73,12 @@ onMounted(() => {
           itemStyle: {
             areaColor: "rgba(0, 10, 52, 1)",
             borderColor: "rgba(0, 10, 52, 1)",
-            normal: {
+            // normal: {
               opacity: 0,
               label: {
                 show: false,
                 color: "#009cc9",
-              },
+              // },
             },
           },
           label: {
@@ -107,24 +105,25 @@ onMounted(() => {
           max: 2,
         },
         label: {
-          show: false,
+          show: true,
           color: "#FFFFFF",
-          fontSize: 16,
+          fontSize: 12,
         },
         itemStyle: {
-          normal: {
+          // normal: {
             areaColor: "#0c3653",
             borderColor: "#1cccff",
             borderWidth: 1.8,
-          },
-          emphasis: {
+          // },
+         
+        },
+        emphasis: {
             areaColor: "#56b1da",
             label: {
               show: false,
               color: "#fff",
             },
           },
-        },
         data: data,
       },
       {
@@ -135,22 +134,16 @@ onMounted(() => {
           // symbolSize: [30,120],
           // symbolOffset:[0, '-40%'] ,
           label: {
-              normal: {
+              // normal: {
                   show: false,
-              }
+              // }
           },
           itemStyle: {
-              normal: {
+              // normal: {
                   color: '#D8BC37', //标志颜色
-              }
+              // }
           },
           data: data,
-          showEffectOn: 'render',
-          rippleEffect: {
-              brushType: 'stroke'
-          },
-          hoverAnimation: true,
-          zlevel: 1
       },
     ],
   })
