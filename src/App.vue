@@ -14,9 +14,11 @@ import * as echarts from 'echarts'   // echart 5的用法
 import './assets/china'
 
 const store = useStore()
-store.getList()
 
-onMounted(() => {
+
+onMounted( async () =>  {
+  await store.getList()
+  // console.log(store.list.diseaseh5Shelf)
   const charts = echarts.init(document.querySelector('#china') as HTMLElement)
   // 地图 echarts
   var data = [
@@ -93,7 +95,7 @@ onMounted(() => {
       {
         type: "map",
         selectedMode: "multiple",
-        mapType: "china",
+        map: "china",
         aspectScale: 0.8,
         layoutCenter: ["50%", "50%"], //地图位置
         layoutSize: "120%",
@@ -168,6 +170,8 @@ html,body,#app{
   }
   &-center{
     flex: 1;
+    // width:500px;
+    height:600px
   }
   &-right{
     width: 400px;
