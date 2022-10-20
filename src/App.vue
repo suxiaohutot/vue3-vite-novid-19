@@ -18,15 +18,13 @@ const store = useStore()
 
 onMounted( async () =>  {
   await store.getList()
-  // console.log(store.list.diseaseh5Shelf)
+  const city = store.list.diseaseh5Shelf.areaTree[0].children
+  console.log(city)
   const charts = echarts.init(document.querySelector('#china') as HTMLElement)
   // 地图 echarts
   var data = [
     {
       name: "内蒙古",
-      itemStyle: {
-        areaColor: "#56b1da",
-      },
       value:[110.3467, 41.4899]
     },
   ];
@@ -63,12 +61,10 @@ onMounted( async () =>  {
           shadowOffsetY: 15,
           opacity: 0.5,
         // },
-        
       },
       emphasis: {
           areaColor: "#0f5d9d",
         },
-
       regions: [
         {
           name: "南海诸岛",
