@@ -12,32 +12,41 @@ import { useStore } from './stores/counter'
 import { onMounted } from 'vue'
 import * as echarts from 'echarts'   // echart 5的用法
 import './assets/china'
+import {geoCoordMap} from './assets/geoMap'
 
 const store = useStore()
 
 
 onMounted( async () =>  {
   await store.getList()
+  
+})
+
+// echarts组件
+const initCharts = () =>{
   const city = store.list.diseaseh5Shelf.areaTree[0].children
-  console.log(city)
+  const data = city.map(v=>{
+    return {
+      name: v.name,
+      value: geoCoordMap[v.name].concat(v.total.nowConfirm)
+    }
+  })
   const charts = echarts.init(document.querySelector('#china') as HTMLElement)
   // 地图 echarts
-  var data = [
-    {
-      name: "内蒙古",
-      value:[110.3467, 41.4899]
-    },
-  ];
-  // var option = 
+  // var data = [
+  //   {
+  //     name: "内蒙古",
+  //     value:[110.3467, 41.4899]
+  //   },
+  // ];
+
   charts.setOption({
-    // backgroundColor: "black",
     geo: {
       map: "china",
       aspectScale: 0.8,
       layoutCenter: ["50%", "50%"],
       layoutSize: "120%",
       itemStyle: {
-        // normal: {
           areaColor: {
             type: "linear-gradient",
             x: 0,
@@ -60,7 +69,6 @@ onMounted( async () =>  {
           shadowOffsetX: 0,
           shadowOffsetY: 15,
           opacity: 0.5,
-        // },
       },
       emphasis: {
           areaColor: "#0f5d9d",
@@ -71,12 +79,10 @@ onMounted( async () =>  {
           itemStyle: {
             areaColor: "rgba(0, 10, 52, 1)",
             borderColor: "rgba(0, 10, 52, 1)",
-            // normal: {
               opacity: 0,
               label: {
                 show: false,
                 color: "#009cc9",
-              // },
             },
           },
           label: {
@@ -90,7 +96,7 @@ onMounted( async () =>  {
     series: [
       {
         type: "map",
-        selectedMode: "multiple",
+        // selectedMode: "multiple",
         map: "china",
         aspectScale: 0.8,
         layoutCenter: ["50%", "50%"], //地图位置
@@ -132,20 +138,21 @@ onMounted( async () =>  {
           // symbolSize: [30,120],
           // symbolOffset:[0, '-40%'] ,
           label: {
-              // normal: {
-                  show: false,
-              // }
+            show: true,
+            color: "#fff",
+            formatter(value:any){
+              console.log(value)
+              return value.data.value[2]
+            }
           },
           itemStyle: {
-              // normal: {
-                  color: '#D8BC37', //标志颜色
-              // }
+            color: '#D8BC37', //标志颜色
           },
           data: data,
       },
     ],
   })
-})
+}
 
 </script>
 
