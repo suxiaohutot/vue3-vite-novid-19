@@ -19,18 +19,21 @@ const store = useStore()
 
 onMounted( async () =>  {
   await store.getList()
-  
+  initCharts()
 })
 
 // echarts组件
-const initCharts = () =>{
+const initCharts = () => {
   const city = store.list.diseaseh5Shelf.areaTree[0].children
+  console.log(city)
   const data = city.map(v=>{
     return {
       name: v.name,
-      value: geoCoordMap[v.name].concat(v.total.nowConfirm)
+      value: geoCoordMap[v.name].concat(v.total.nowConfirm),
+      children: v.children
     }
   })
+  console.log(data)
   const charts = echarts.init(document.querySelector('#china') as HTMLElement)
   // 地图 echarts
   // var data = [
