@@ -1,12 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getApiList } from '../server/index'
-import type {RootObject, } from './type'
+import type {RootObject, Children, } from './type'
 
 export const useStore = defineStore({
   id:'counter',
   state: ()=>({
-    list: <RootObject>{}
+    list: <RootObject>{},
+    item: <Children[]>[]
   }),
   actions:{
    async getList()  {

@@ -91,6 +91,17 @@ export interface Today3 {
   confirm: number;
   isUpdated: boolean;
 }
+export interface Children {
+  name: string;
+  today: Today;
+  total: Total,
+}
+export interface Children {
+  name: string;
+  today: Today;
+  total: Total,
+  children: Children[]
+}
 
 export interface AreaTree {
   total: Total;

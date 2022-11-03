@@ -2,7 +2,28 @@
   <div class="box" :style="{background: `url(${bg})`}">
     <div class="box-left"></div>
     <div id="china" class="box-center"></div>
-    <div class="box-right"></div>
+    <div style="color:white" class="box-right">
+      <table border="1" cellspaceing class="table">
+        <thead>
+          <tr>
+            <td align="center">地区</td>
+            <td align="center">新增确诊</td>
+            <td align="center">累计确诊</td>
+            <td align="center">治愈</td>
+            <td align="center">死亡</td>
+          </tr>
+        </thead>
+        <transition-group enter-active-class="animate__animated animate__flipInY" tag="tbody">
+          <tr :key="item.name" v-for="item in store.item">
+            <td align="center">{{item.name}}</td>
+            <td align="center">{{item.today.confirm}}</td>
+            <td align="center">{{item.total.confirm}}</td>
+            <td align="center">{{item.total.heal}}</td>
+            <td align="center">{{item.total.dead}}</td>
+          </tr>
+        </transition-group>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -13,6 +34,7 @@ import { onMounted } from 'vue'
 import * as echarts from 'echarts'   // echart 5的用法
 import './assets/china'
 import {geoCoordMap} from './assets/geoMap'
+import 'animate.css'
 
 const store = useStore()
 
@@ -25,7 +47,7 @@ onMounted( async () =>  {
 // echarts组件
 const initCharts = () => {
   const city = store.list.diseaseh5Shelf.areaTree[0].children
-  console.log(city)
+  // console.log(city)
   const data = city.map(v=>{
     return {
       name: v.name,
@@ -33,15 +55,8 @@ const initCharts = () => {
       children: v.children
     }
   })
-  console.log(data)
+  // console.log(data)
   const charts = echarts.init(document.querySelector('#china') as HTMLElement)
-  // 地图 echarts
-  // var data = [
-  //   {
-  //     name: "内蒙古",
-  //     value:[110.3467, 41.4899]
-  //   },
-  // ];
 
   charts.setOption({
     geo: {
@@ -144,7 +159,7 @@ const initCharts = () => {
             show: true,
             color: "#fff",
             formatter(value:any){
-              console.log(value)
+              // console.log(value)
               return value.data.value[2]
             }
           },
@@ -155,7 +170,12 @@ const initCharts = () => {
       },
     ],
   })
+  charts.on('click',(e: any) =>{
+    store.item = e.data.children
+    console.log(store.item);
+  })
 }
+
 
 </script>
 
@@ -177,11 +197,26 @@ html,body,#app{
   &-center{
     flex: 1;
     // width:500px;
-    height:600px
+    // height:600px
   }
   &-right{
     width: 400px;
     // background-color: antiquewhite;
+  }
+}
+.table{
+  width: 100%;
+  background-color: #212028;
+  tr{
+    th{
+      padding: 5px;
+      white-space: nowrap;
+    }
+    td{
+      padding: 5px 10px;
+      width: 100%;
+      white-space: nowrap;
+    }
   }
 }
 </style>
